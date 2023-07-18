@@ -1,0 +1,50 @@
+{
+  "name": "paytech/paytech-bundle",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "version": "0.0.1",
+  "type": "symfony-bundle",
+  "authors": [
+    {
+      "name": "kkazydub",
+      "email": "konstantin.kazydub@aventus.work",
+      "role": "developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "guzzlehttp/guzzle": "^7.7",
+    "symfony/config": ">6.0",
+    "symfony/console": ">6.0",
+    "symfony/dependency-injection": ">6.0",
+    "symfony/deprecation-contracts": "^3",
+    "symfony/framework-bundle": ">6.0",
+    "symfony/monolog-bundle": "^3.8",
+    "symfony/service-contracts": ">3"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "symfony/flex": true
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "PayTech\\PayTechBundle\\": "/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PayTech\\PayTechBundle\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.0.x-dev"
+    }
+  },
+  "prefer-stable": true
+}

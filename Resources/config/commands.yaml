@@ -1,0 +1,15 @@
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  PayTech\PayTechBundle\Commands\:
+    resource: '../../Commands'
+
+  PayTech\PayTechBundle\Commands\StatusCommand:
+    bind:
+      $url: '%env(PAYTECH_API_URL)%'
+      $name: '%env(PAYTECH_MERCHANT_NAME)%'
+      $key: '%env(PAYTECH_MERCHANT_KEY)%'
+      $logger: '@monolog.logger.cache'
