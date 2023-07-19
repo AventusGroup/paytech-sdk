@@ -31,8 +31,6 @@ class PaytechA2cRequestDto
     public int $amount;
     public string $operationType;
     public array $options;
-    private LoggerInterface $logger;
-    private SignService $signService;
 
     /**
      * @throws ValidationException
@@ -63,22 +61,5 @@ class PaytechA2cRequestDto
             $this->logger->error('Validation not passed', $violations);
             throw new ValidationException('Validation exception', 422);
         }
-    }
-
-    #[Required]
-    public function setLogger(LoggerInterface $logger): void
-    {
-        $this->logger = $logger;
-    }
-
-    public function getSignedData(): array
-    {
-        return $this->signService->signRequest($this->toArray());
-    }
-
-    #[Required]
-    public function setSignService(SignService $signService)
-    {
-        $this->signService = $signService;
     }
 }

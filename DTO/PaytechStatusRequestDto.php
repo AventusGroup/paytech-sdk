@@ -25,15 +25,4 @@ class PaytechStatusRequestDto
         $this->merchant = $data['merchant'] ?? null;
         $this->tranId = $data['tranId'] ?? null;
     }
-
-    public function getSignedData(): array
-    {
-        return $this->signService->signRequest($this->toArray());
-    }
-
-    #[Required]
-    public function setSignService(SignService $signService)
-    {
-        $this->signService = $signService;
-    }
 }

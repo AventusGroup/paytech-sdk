@@ -2,7 +2,6 @@
 
 namespace PayTech\PayTechBundle\Services;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use PayTech\PayTechBundle\DTO\PaytechA2cRequestDto;
 use PayTech\PayTechBundle\DTO\PaytechBalanceRequestDto;
@@ -17,9 +16,9 @@ class PaytechRequest
 {
     public function __construct(
         private readonly LoggerInterface $logger,
-        private readonly Client          $client
-    )
-    {
+        private readonly PayTechClient   $client,
+        private readonly SignService     $signService,
+    ) {
     }
 
     /**
@@ -28,11 +27,12 @@ class PaytechRequest
     public function makeA2c($data): PaytechResponseDto
     {
         $requestDto = new PaytechA2cRequestDto($data);
-        $this->logger->info('PayTech outgoing request', $requestDto->getSignedData());
+        $signedData = $this->signService->signRequest($requestDto->toArray());
+        $this->logger->info('PayTech outgoing request', $signedData);
         $response = new Response();
 
         try {
-            $response = $this->client->post('/v1/a2c', ['json' => $requestDto->getSignedData()]);
+            $response = $this->client->client->post('/v1/a2c', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -49,11 +49,12 @@ class PaytechRequest
     public function makeC2a($data): string
     {
         $requestDto = new PaytechC2aRequestDto($data);
-        $this->logger->info('PayTech outgoing request', $requestDto->getSignedData());
+        $signedData = $this->signService->signRequest($requestDto->toArray());
+        $this->logger->info('PayTech outgoing request', $signedData);
         $response = new Response();
 
         try {
-            $response = $this->client->post('/url/frame/c2a', ['json' => $requestDto->getSignedData()]);
+            $response = $this->client->client->post('/url/frame/c2a', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -70,11 +71,12 @@ class PaytechRequest
     public function makeCharge($data): PaytechResponseDto
     {
         $requestDto = new PaytechChargeRequestDto($data);
-        $this->logger->info('PayTech outgoing request', $requestDto->getSignedData());
+        $signedData = $this->signService->signRequest($requestDto->toArray());
+        $this->logger->info('PayTech outgoing request', $signedData);
         $response = new Response();
 
         try {
-            $response = $this->client->post('/v1/charge', ['json' => $requestDto->getSignedData()]);
+            $response = $this->client->client->post('/v1/charge', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -88,11 +90,12 @@ class PaytechRequest
     public function getStatus($data): PaytechResponseDto
     {
         $requestDto = new PaytechStatusRequestDto($data);
-        $this->logger->info('PayTech outgoing request', $requestDto->getSignedData());
+        $signedData = $this->signService->signRequest($requestDto->toArray());
+        $this->logger->info('PayTech outgoing request', $signedData);
         $response = new Response();
 
         try {
-            $response = $this->client->post('/v1/status', ['json' => $requestDto->getSignedData()]);
+            $response = $this->client->client->post('/v1/status', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -106,11 +109,12 @@ class PaytechRequest
     public function getBalance($data): PaytechResponseDto
     {
         $requestDto = new PaytechBalanceRequestDto($data);
-        $this->logger->info('PayTech outgoing request', $requestDto->getSignedData());
+        $signedData = $this->signService->signRequest($requestDto->toArray());
+        $this->logger->info('PayTech outgoing request', $signedData);
         $response = new Response();
 
         try {
-            $response = $this->client->post('/v1/getDeposit', ['json' => $requestDto->getSignedData()]);
+            $response = $this->client->client->post('/v1/getDeposit', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }

@@ -24,8 +24,8 @@ class PaytechResponseDto
 
     public const SUCCESS = [1000, 1200, 1210];
     public ?int $responseCode;
-    public ?int $createDate;
-    public ?int $callbackDate;
+    public ?string $createDate;
+    public ?string $callbackDate;
     public ?string $approval;
     public ?string $description;
     private ?int $amount;

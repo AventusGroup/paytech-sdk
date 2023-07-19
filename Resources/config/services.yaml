@@ -16,3 +16,15 @@ services:
       - '../../PayTechBundle.php'
       - '../../composer.*'
       - '../../vendor/'
+
+  PayTech\PayTechBundle\DTO\:
+    resource: '../../*DTO.php'
+    calls:
+      - setSignService: ['PayTech\PayTechBundle\Services\SignService']
+
+  PayTech\PayTechBundle\Services\SignService:
+    bind:
+      $secretKey: '%env(PAYTECH_MERCHANT_KEY)%'
+  PayTech\PayTechBundle\Services\PayTechClient:
+    bind:
+      $host: '%env(PAYTECH_API_URL)%'

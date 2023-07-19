@@ -8,7 +8,10 @@ trait Arrayable
     {
         $result = [];
         foreach (get_class_vars(self::class) as $key => $var) {
-            $result[$key] = $this->$var;
+            if ($key == 'logger'){
+                continue;
+            }
+            $result[$key] = $this->$key;
         }
 
         return $result;

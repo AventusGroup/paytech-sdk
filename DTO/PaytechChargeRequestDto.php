@@ -27,9 +27,6 @@ use Symfony\Contracts\Service\Attribute\Required;
 class PaytechChargeRequestDto
 {
     use ValidationTrait, Arrayable;
-
-    private LoggerInterface $logger;
-    private SignService $signService;
     /**
      * @var mixed|string|null
      */
@@ -85,22 +82,5 @@ class PaytechChargeRequestDto
             $this->logger->error('Validation not passed', $violations);
             throw new ValidationException('Validation exception', 422);
         }
-    }
-
-    #[Required]
-    public function setLogger(LoggerInterface $logger): void
-    {
-        $this->logger = $logger;
-    }
-
-    public function getSignedData(): array
-    {
-        return $this->signService->signRequest($this->toArray());
-    }
-
-    #[Required]
-    public function setSignService(SignService $signService)
-    {
-        $this->signService = $signService;
     }
 }
