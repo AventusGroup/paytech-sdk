@@ -21,6 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 class PaytechResponseDto
 {
     use Arrayable;
+
     public const SUCCESS = [1000, 1200, 1210];
     public ?int $responseCode;
     public ?int $createDate;
@@ -35,6 +36,7 @@ class PaytechResponseDto
     public ?string $respMessage;
     public ?string $token;
     public ?string $frameUrl;
+    private ?int $deposit;
 
     /**
      * @param Request $request
@@ -56,6 +58,7 @@ class PaytechResponseDto
         $this->respMessage = $data->respMessage ?? null;
         $this->token = $data->token ?? null;
         $this->frameUrl = $data->frameUrl ?? null;
+        $this->deposit = $data->deposit ?? null;
     }
 
     /**
@@ -85,7 +88,7 @@ class PaytechResponseDto
      */
     public function getFee(bool $raw = false): float
     {
-        if (!$this->fee) {
+        if (($this->fee <= 0) || !$this->fee) {
             return 0.0;
         }
 
@@ -98,5 +101,17 @@ class PaytechResponseDto
     public function isSuccess(): bool
     {
         return in_array($this->responseCode, self::SUCCESS, true);
+    }
+
+    public function getBalance(bool $raw = false): float
+    {
+        if (($this->deposit <= 0) || !$this->deposit) {
+            return 0.0;
+        }
+
+        if ($raw) {
+            return $this->deposit;
+        }
+        return $this->deposit / 100;
     }
 }

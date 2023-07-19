@@ -22,6 +22,7 @@ use Symfony\Contracts\Service\Attribute\Required;
 class PaytechA2cRequestDto
 {
     use ValidationTrait, Arrayable;
+
     public string $merchant;
     public string $tranId;
     public ?string $pan;
@@ -31,6 +32,7 @@ class PaytechA2cRequestDto
     public string $operationType;
     public array $options;
     private LoggerInterface $logger;
+    private SignService $signService;
 
     /**
      * @throws ValidationException
@@ -67,5 +69,16 @@ class PaytechA2cRequestDto
     public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
+    }
+
+    public function getSignedData(): array
+    {
+        return $this->signService->signRequest($this->toArray());
+    }
+
+    #[Required]
+    public function setSignService(SignService $signService)
+    {
+        $this->signService = $signService;
     }
 }

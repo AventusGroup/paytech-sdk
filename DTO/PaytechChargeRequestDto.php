@@ -3,6 +3,7 @@
 namespace PayTech\PayTechBundle\DTO;
 
 use PayTech\PayTechBundle\Exceptions\ValidationException;
+use PayTech\PayTechBundle\Services\SignService;
 use PayTech\PayTechBundle\Traits\Arrayable;
 use PayTech\PayTechBundle\Traits\ValidationTrait;
 use Psr\Log\LoggerInterface;
@@ -28,6 +29,7 @@ class PaytechChargeRequestDto
     use ValidationTrait, Arrayable;
 
     private LoggerInterface $logger;
+    private SignService $signService;
     /**
      * @var mixed|string|null
      */
@@ -89,5 +91,16 @@ class PaytechChargeRequestDto
     public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
+    }
+
+    public function getSignedData(): array
+    {
+        return $this->signService->signRequest($this->toArray());
+    }
+
+    #[Required]
+    public function setSignService(SignService $signService)
+    {
+        $this->signService = $signService;
     }
 }

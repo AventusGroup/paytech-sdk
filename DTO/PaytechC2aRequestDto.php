@@ -3,6 +3,7 @@
 namespace PayTech\PayTechBundle\DTO;
 
 use PayTech\PayTechBundle\Exceptions\ValidationException;
+use PayTech\PayTechBundle\Services\SignService;
 use PayTech\PayTechBundle\Traits\Arrayable;
 use PayTech\PayTechBundle\Traits\ValidationTrait;
 use Psr\Log\LoggerInterface;
@@ -41,6 +42,7 @@ class PaytechC2aRequestDto
     public ?string $percent_fee;
     public array $options;
     private LoggerInterface $logger;
+    private SignService $signService;
 
     /**
      * @throws ValidationException
@@ -97,5 +99,16 @@ class PaytechC2aRequestDto
     public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
+    }
+
+    public function getSignedData(): array
+    {
+        return $this->signService->signRequest($this->toArray());
+    }
+
+    #[Required]
+    public function setSignService(SignService $signService)
+    {
+        $this->signService = $signService;
     }
 }
