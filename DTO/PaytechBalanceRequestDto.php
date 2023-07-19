@@ -19,7 +19,7 @@ use Symfony\Contracts\Service\Attribute\Required;
  * @property string $operationType
  * @property array $options
  */
-class PaytechA2cRequestDto
+class PaytechBalanceRequestDto
 {
     use ValidationTrait, Arrayable;
     public string $merchant;

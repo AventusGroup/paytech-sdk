@@ -3,6 +3,7 @@
 namespace PayTech\PayTechBundle\DTO;
 
 use GuzzleHttp\Psr7\Request;
+use PayTech\PayTechBundle\Traits\Arrayable;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -19,6 +20,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class PaytechResponseDto
 {
+    use Arrayable;
+    public const SUCCESS = [1000, 1200, 1210];
     public ?int $responseCode;
     public ?int $createDate;
     public ?int $callbackDate;
@@ -31,6 +34,7 @@ class PaytechResponseDto
     public ?string $tranId;
     public ?string $respMessage;
     public ?string $token;
+    public ?string $frameUrl;
 
     /**
      * @param Request $request
@@ -39,7 +43,7 @@ class PaytechResponseDto
     {
         $data = json_decode($response->getBody()->getContents());
 
-        $this->responseCode = (int) $data->respCode ?? null;
+        $this->responseCode = (int)$data->respCode ?? null;
         $this->createDate = $data->createDate ?? null;
         $this->callbackDate = $data->callbackDate ?? null;
         $this->approval = $data->approval ?? null;
@@ -51,6 +55,7 @@ class PaytechResponseDto
         $this->tranId = $data->tranId ?? null;
         $this->respMessage = $data->respMessage ?? null;
         $this->token = $data->token ?? null;
+        $this->frameUrl = $data->frameUrl ?? null;
     }
 
     /**
@@ -90,13 +95,8 @@ class PaytechResponseDto
         return $this->fee / 100;
     }
 
-    public function toArray(): array
+    public function isSuccess(): bool
     {
-        $result = [];
-        foreach (get_class_vars(self::class) as $key => $var) {
-            $result[$key] = $this->$var;
-        }
-
-        return $result;
+        return in_array($this->responseCode, self::SUCCESS, true);
     }
 }
