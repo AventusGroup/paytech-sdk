@@ -43,6 +43,7 @@ class PaytechDirectResponseDto
     {
 
         $data = json_decode($response->getBody()->getContents(), true);
+        dd($response->getBody()->getContents());
         $this->url = $data['url'] ?? null;
         $this->creq = $data['creq'] ?? null;
         $this->pareq = $data['pareq'] ?? null;

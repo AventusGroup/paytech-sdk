@@ -13,9 +13,3 @@ services:
       $name: '%env(PAYTECH_MERCHANT_NAME)%'
       $key: '%env(PAYTECH_MERCHANT_KEY)%'
       $logger: '@monolog.logger.paytech'
-
-
-  PayTech\PayTechBundle\Commands\EnvCommand:
-    bind:
-      $logger: '@monolog.logger.paytech'
-      $root: '%kernel.project_dir%'
