@@ -12,4 +12,9 @@ services:
       $url: '%env(PAYTECH_API_URL)%'
       $name: '%env(PAYTECH_MERCHANT_NAME)%'
       $key: '%env(PAYTECH_MERCHANT_KEY)%'
-      $logger: '@monolog.logger.cache'
+      $logger: '@monolog.logger.paytech'
+
+
+  PayTech\PayTechBundle\Commands\EnvCommand:
+    bind:
+      $logger: '@monolog.logger.paytech'

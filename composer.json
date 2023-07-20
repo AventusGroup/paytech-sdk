@@ -46,5 +46,13 @@
       "dev-master": "0.0.x-dev"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "symfony-scripts": [
+      "bin/console paytech:add-vars"
+    ],
+    "post-install-cmd": [
+      "@symfony-scripts"
+    ]
+  }
 }
