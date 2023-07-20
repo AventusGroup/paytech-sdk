@@ -7,6 +7,8 @@ use PayTech\PayTechBundle\DTO\PaytechA2cRequestDto;
 use PayTech\PayTechBundle\DTO\PaytechBalanceRequestDto;
 use PayTech\PayTechBundle\DTO\PaytechC2aRequestDto;
 use PayTech\PayTechBundle\DTO\PaytechChargeRequestDto;
+use PayTech\PayTechBundle\DTO\PaytechDirectC2aRequestDto;
+use PayTech\PayTechBundle\DTO\PaytechDirectResponseDto;
 use PayTech\PayTechBundle\DTO\PaytechLookUpRequestDto;
 use PayTech\PayTechBundle\DTO\PaytechResponseDto;
 use PayTech\PayTechBundle\DTO\PaytechStatusRequestDto;
@@ -20,7 +22,8 @@ class PaytechRequest
         private readonly LoggerInterface $logger,
         private readonly PayTechClient   $client,
         private readonly SignService     $signService,
-    ) {
+    )
+    {
     }
 
     /**
@@ -44,6 +47,7 @@ class PaytechRequest
 
         return $responseDto;
     }
+
     /**
      * @throws ValidationException
      */
@@ -65,9 +69,10 @@ class PaytechRequest
 
         return $responseDto->frameUrl;
     }
-    public function makeDirectC2a($data): string
+
+    public function makeDirectC2a($data): PaytechDirectResponseDto
     {
-        $requestDto = new PaytechC2aRequestDto($data);
+        $requestDto = new PaytechDirectC2aRequestDto($data);
         $signedData = $this->signService->signRequest($requestDto->toArray());
         $this->logger->info('PayTech outgoing request', $signedData);
         $response = new Response();
@@ -78,11 +83,12 @@ class PaytechRequest
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
 
-        $responseDto = new PaytechResponseDto($response);
+        $responseDto = new PaytechDirectResponseDto($response);
         $this->logger->info('PayTech response', $responseDto->toArray());
 
-        return $responseDto->frameUrl;
+        return $responseDto;
     }
+
     public function makeLookUp($data): string
     {
         $requestDto = new PaytechLookUpRequestDto($data);
@@ -101,7 +107,8 @@ class PaytechRequest
 
         return $responseDto->frameUrl;
     }
-    public function makeDirectLookUp($data): string
+
+    public function makeDirectLookUp($data): PaytechDirectResponseDto
     {
         $requestDto = new PaytechLookUpRequestDto($data);
         $signedData = $this->signService->signRequest($requestDto->toArray());
@@ -114,11 +121,12 @@ class PaytechRequest
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
 
-        $responseDto = new PaytechResponseDto($response);
+        $responseDto = new PaytechDirectResponseDto($response);
         $this->logger->info('PayTech response', $responseDto->toArray());
 
-        return $responseDto->frameUrl;
+        return $responseDto;
     }
+
     public function makeVerification3ds($data): string
     {
         $requestDto = new PaytechVerification3dsRequestDto($data);
@@ -137,7 +145,8 @@ class PaytechRequest
 
         return $responseDto->frameUrl;
     }
-    public function makeDirectVerification3ds($data): string
+
+    public function makeDirectVerification3ds($data): PaytechDirectResponseDto
     {
         $requestDto = new PaytechVerification3dsRequestDto($data);
         $signedData = $this->signService->signRequest($requestDto->toArray());
@@ -150,11 +159,12 @@ class PaytechRequest
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
 
-        $responseDto = new PaytechResponseDto($response);
+        $responseDto = new PaytechDirectResponseDto($response);
         $this->logger->info('PayTech response', $responseDto->toArray());
 
-        return $responseDto->frameUrl;
+        return $responseDto;
     }
+
     /**
      * @throws ValidationException
      */
@@ -176,6 +186,7 @@ class PaytechRequest
 
         return $responseDto;
     }
+
     public function getStatus($data): PaytechResponseDto
     {
         $requestDto = new PaytechStatusRequestDto($data);
@@ -194,6 +205,7 @@ class PaytechRequest
 
         return $responseDto;
     }
+
     public function getBalance($data): PaytechResponseDto
     {
         $requestDto = new PaytechBalanceRequestDto($data);
