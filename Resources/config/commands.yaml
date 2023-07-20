@@ -18,3 +18,4 @@ services:
   PayTech\PayTechBundle\Commands\EnvCommand:
     bind:
       $logger: '@monolog.logger.paytech'
+      $root: '%kernel.project_dir%'

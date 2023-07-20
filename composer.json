@@ -48,11 +48,8 @@
   },
   "prefer-stable": true,
   "scripts": {
-    "symfony-scripts": [
-      "bin/console paytech:add-vars"
-    ],
-    "post-install-cmd": [
-      "@symfony-scripts"
-    ]
+    "auto-scripts": {
+      "paytech:add-vars": "symfony-cmd",
+    }
   }
 }
