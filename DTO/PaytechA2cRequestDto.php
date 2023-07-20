@@ -58,7 +58,6 @@ class PaytechA2cRequestDto
         $violations = $this->defaultValidation();
 
         if (count($violations) > 0) {
-            $this->logger->error('Validation not passed', $violations);
             throw new ValidationException('Validation exception', 422);
         }
     }

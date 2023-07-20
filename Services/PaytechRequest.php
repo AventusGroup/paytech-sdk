@@ -55,7 +55,7 @@ class PaytechRequest
         $response = new Response();
 
         try {
-            $response = $this->client->client->post('/url/frame/c2a', ['json' => $signedData]);
+            $response = $this->client->client->post('/v1/url/frame/c2a', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -73,7 +73,7 @@ class PaytechRequest
         $response = new Response();
 
         try {
-            $response = $this->client->client->post('/url/frame/c2a', ['json' => $signedData]);
+            $response = $this->client->client->post('/v1/c2a', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -91,7 +91,7 @@ class PaytechRequest
         $response = new Response();
 
         try {
-            $response = $this->client->client->post('/url/frame/lookup', ['json' => $signedData]);
+            $response = $this->client->client->post('/v1/url/frame/lookup', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -127,7 +127,7 @@ class PaytechRequest
         $response = new Response();
 
         try {
-            $response = $this->client->client->post('/url/frame/verification3ds', ['json' => $signedData]);
+            $response = $this->client->client->post('/v1/url/frame/verification3ds', ['json' => $signedData]);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }

@@ -18,7 +18,7 @@ trait ValidationTrait
             }
         }
 
-        if ($data['token'] && $data['pan']) {
+        if (isset($data['token']) && isset($data['pan'])) {
             $violations['pan'] = 'Pan must be null if token exists';
         }
 

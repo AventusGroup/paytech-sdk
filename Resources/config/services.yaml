@@ -19,8 +19,6 @@ services:
 
   PayTech\PayTechBundle\DTO\:
     resource: '../../*DTO.php'
-    calls:
-      - setSignService: ['PayTech\PayTechBundle\Services\SignService']
 
   PayTech\PayTechBundle\Services\SignService:
     bind:

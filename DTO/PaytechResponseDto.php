@@ -43,22 +43,22 @@ class PaytechResponseDto
      */
     public function __construct(ResponseInterface $response)
     {
-        $data = json_decode($response->getBody()->getContents());
+        $data = json_decode($response->getBody()->getContents(), true);
 
-        $this->responseCode = (int)$data->respCode ?? null;
-        $this->createDate = $data->createDate ?? null;
-        $this->callbackDate = $data->callbackDate ?? null;
-        $this->approval = $data->approval ?? null;
-        $this->description = $data->description ?? null;
-        $this->amount = $data->amount ?? null;
-        $this->fee = $data->fee ?? null;
-        $this->pan = $data->pan ?? null;
-        $this->gatewayName = $data->gatewayName ?? null;
-        $this->tranId = $data->tranId ?? null;
-        $this->respMessage = $data->respMessage ?? null;
-        $this->token = $data->token ?? null;
-        $this->frameUrl = $data->frameUrl ?? null;
-        $this->deposit = $data->deposit ?? null;
+        $this->responseCode = $data['respCode'] ?? null;
+        $this->createDate = $data['createDate'] ?? null;
+        $this->callbackDate = $data['callbackDate'] ?? null;
+        $this->approval = $data['approval'] ?? null;
+        $this->description = $data['description'] ?? null;
+        $this->amount = $data['amount'] ?? null;
+        $this->fee = $data['fee'] ?? null;
+        $this->pan = $data['pan'] ?? null;
+        $this->gatewayName = $data['gatewayName'] ?? null;
+        $this->tranId = $data['tranId'] ?? null;
+        $this->respMessage = $data['respMessage'] ?? null;
+        $this->token = $data['token'] ?? null;
+        $this->frameUrl = $data['frameUrl'] ?? null;
+        $this->deposit = $data['deposit'] ?? null;
     }
 
     /**

@@ -83,12 +83,11 @@ class PaytechLookUpRequestDto
     {
         $violations = $this->defaultValidation();
 
-        if (empty($data['options']['client_name'])) {
+        if (empty($this->options['client_name'])) {
             $violations['client_name'] = 'Payer full - name are required';
         }
 
         if (count($violations) > 0) {
-            $this->logger->error('Validation not passed', $violations);
             throw new ValidationException('Validation exception', 422);
         }
     }
